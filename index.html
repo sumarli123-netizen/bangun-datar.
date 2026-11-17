@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Pulau Bangun Datar - Matematika Kelas 2 SD</title>
+    <!-- Google Fonts Opsional (Fallback mulus ke font sistem ramah anak jika offline) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* =====================================================================
+           1. VARIABEL TEMA & RESET CSS MANDIRI (100% OFFLINE READY)
+           ===================================================================== */
+        :root {
+            --sky-top: #7dd3fc;
+            --sky-mid: #bae6fd;
+            --sand-bottom: #fef08a;
+            --grass-green: #22c55e;
+            --grass-dark: #15803d;
+            --sun-gold: #f59e0b;
+            --sun-light: #fef3c7;
+            --orange-bright: #f97316;
+            --blue-bright: #2563eb;
+            --rose-bright: #e11d48;
+            --purple-bright: #7c3aed;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+            --radius-xl: 28px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', 'Comic Sans MS', 'Chalkboard SE', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, #dcfce7 82%, var(--sand-bottom) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        h1, h2, h3, .font-kid {
+            font-family: 'Fredoka', 'Nunito', 'Comic Sans MS', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =====================================================================
+           2. ANIMASI KARAKTER, ELEMEN & TRANSISI HALUS
+           ===================================================================== */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-9px); }
+        }
+
+        @keyframes dinoJumpHappy {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-22px) scale(1.08) rotate(-4deg); }
+            60% { transform: translateY(-6px) scale(1.03) rotate(4deg); }
+        }
+
+        @keyframes dinoEncourage {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-6deg); }
+            75% { transform: rotate(6deg); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.88); opacity: 0; }
+            65% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes confettiDrop {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0.9; }
+        }
+
+        .animate-float {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+
+        .animate-pop {
+            animation: popIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .dino-happy {
+            animation: dinoJumpHappy 0.7s ease-in-out 2;
+        }
+
+        .dino-sad {
+            animation: dinoEncourage 0.55s ease-in-out 2;
+        }
+
+        /* Tombol 3D Besar Ramah Anak (Touch-Friendly) */
+        .btn-3d {
+            border: none;
+            cursor: pointer;
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+            font-weight: 700;
+            transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+            box-shadow: 0 6px 0 rgba(15, 23, 42, 0.22);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 rgba(15, 23, 42, 0.22);
+            filter: brightness(1.03);
+        }
+
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(15, 23, 42, 0.22);
+        }
+
+        /* =====================================================================
+           3. HEADER NAVIGASI ATAS
+           ===================================================================== */
+        .top-header {
+            background: rgba(255, 255, 255, 0.94);
+            border-bottom: 4px solid #38bdf8;
+            padding: 12px 18px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            box-shadow: 0 4px 14px rgba(14, 116, 144, 0.1);
+        }
+
+        .header-inner {
+            max-width: 1020px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .brand-btn {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 3px solid #7dd3fc;
+            border-radius: 18px;
+            padding: 8px 16px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .brand-btn:hover {
+            background: #bae6fd;
+        }
+
+        .header-stats {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 0.98rem;
+        }
+
+        .pill-student {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #86efac;
+        }
+
+        .pill-hearts {
+            background: #ffe4e6;
+            color: #be123c;
+            border: 2px solid #fda4af;
+            font-size: 1.05rem;
+        }
+
+        .pill-stars {
+            background: #fef3c7;
+            color: #b45309;
+            border: 2px solid #fcd34d;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .sound-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 15px;
+            background: #f3e8ff;
+            border: 2px solid #d8b4fe;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s;
+        }
+
+        .sound-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* =====================================================================
+           4. KONTENER UTAMA & KARTU
+           ===================================================================== */
+        .main-container {
+            flex: 1;
+            width: 100%;
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 20px 16px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-box {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 28px 24px;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+            border: 5px solid #bae6fd;
+            position: relative;
+        }
+
+        /* =====================================================================
+           5. LAYAR 1: BERANDA CERIA
+           ===================================================================== */
+        .home-card {
+            text-align: center;
+            border-color: #38bdf8;
+            overflow: hidden;
+        }
+
+        .dino-avatar-wrap {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .dino-circle {
+            width: 132px;
+            height: 132px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #a7f3d0, #34d399);
+            border: 5px solid #10b981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25);
+        }
+
+        .dino-tag {
+            margin-top: 10px;
+            background: #dcfce7;
+            color: #15803d;
+            border: 2px solid #4ade80;
+            padding: 5px 16px;
+            border-radius: 999px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .home-title {
+            font-size: clamp(2rem, 5vw, 3.1rem);
+            color: #0284c7;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 0 #e0f2fe;
+        }
+
+        .home-subtitle {
+            font-size: clamp(1.05rem, 2.5vw, 1.28rem);
+            color: var(--text-muted);
+            font-weight: 800;
+            max-width: 680px;
+            margin: 0 auto 22px;
+            line-height: 1.55;
+        }
+
+        .name-input-box {
+            max-width: 440px;
+            margin: 0 auto 26px;
+            background: #f0f9ff;
+            border: 3px solid #7dd3fc;
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+        }
+
+        .name-input-label {
+            display: block;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.15rem;
+            color: #0369a1;
+            margin-bottom: 8px;
+        }
+
+        .name-input-field {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            color: var(--text-dark);
+            background: #ffffff;
+            border: 3px solid #38bdf8;
+            border-radius: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .name-input-field:focus {
+            border-color: var(--sun-gold);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+        }
+
+        .home-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            max-width: 660px;
+            margin: 0 auto;
+        }
+
+        .btn-learn-start {
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: #ffffff;
+            padding: 18px 22px;
+            border-radius: 22px;
+            flex-direction: column;
+            border: 3px solid #93c5fd;
+        }
+
+        .btn-game-start {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            color: #ffffff;
+            padding: 18px 22px;
+            border-radius: 22px;
+            flex-direction: column;
+            border: 3px solid #fde68a;
+        }
+
+        .btn-main-title {
+            font-size: 1.35rem;
+        }
+
+        .btn-main-sub {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        /* =====================================================================
+           6. LAYAR 2: TAHAP 1 - RUANG BELAJAR INTERAKTIF
+           ===================================================================== */
+        .coach-banner {
+            background: #ffffff;
+            border: 4px solid #4ade80;
+            border-radius: 24px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 16px rgba(22, 163, 74, 0.1);
+        }
+
+        .coach-mini-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: #dcfce7;
+            border: 3px solid #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .coach-text-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: #15803d;
+        }
+
+        .coach-text-body {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        /* Tab 4 Bangun Datar */
+        .shape-tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 640px) {
+            .shape-tabs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .shape-tab-btn {
+            padding: 14px 10px;
+            border-radius: 20px;
+            font-size: 1.15rem;
+            flex-direction: column;
+            gap: 4px;
+            border: 3px solid transparent;
+        }
+
+        /* Kartu Ruang Belajar 2 Kolom */
+        .learn-workspace {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .learn-workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .svg-stage-box {
+            background: #f8fafc;
+            border: 3px solid #cbd5e1;
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .svg-canvas-area {
+            width: 240px;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .count-status-pill {
+            margin-top: 10px;
+            min-height: 40px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: #fef3c7;
+            border: 2px solid #fcd34d;
+            color: #92400e;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.05rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dua Tombol Interaktif: Hitung Sisi & Hitung Titik Sudut */
+        .count-buttons-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .btn-count-side {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+            padding: 13px 10px;
+            border-radius: 16px;
+            font-size: 1.02rem;
+            border: 2px solid #fde68a;
+        }
+
+        .btn-count-corner {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #ffffff;
+            padding: 13px 10px;
+            border-radius: 16px;
+            font-size: 1.02rem;
+            border: 2px solid #ddd6fe;
+        }
+
+        /* Kolom Penjelasan Bangun */
+        .shape-info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .shape-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shape-title-text {
+            font-size: 2.2rem;
+        }
+
+        .shape-kid-desc {
+            background: #f0f9ff;
+            border: 3px solid #bae6fd;
+            border-radius: 18px;
+            padding: 14px 16px;
+            font-size: 1.12rem;
+            font-weight: 800;
+            line-height: 1.5;
+            color: #0c4a6e;
+        }
+
+        .shape-metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .metric-box {
+            padding: 12px;
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .metric-side {
+            background: #fffbeb;
+            border: 3px solid #fde68a;
+            color: #92400e;
+        }
+
+        .metric-corner {
+            background: #f5f3ff;
+            border: 3px solid #ddd6fe;
+            color: #5b21b6;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.45rem;
+            margin-top: 2px;
+        }
+
+        .examples-box {
+            background: #ecfdf5;
+            border: 3px solid #a7f3d0;
+            border-radius: 20px;
+            padding: 14px;
+        }
+
+        .examples-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.05rem;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .example-item-card {
+            background: #ffffff;
+            border: 2px solid #6ee7b7;
+            border-radius: 14px;
+            padding: 10px 6px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .example-item-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.2;
+        }
+
+        /* Banner Ajakan Lanjut Game */
+        .cta-adventure-bar {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 4px solid #f59e0b;
+            border-radius: 24px;
+            padding: 18px 22px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        /* =====================================================================
+           7. LAYAR 3: TAHAP 2 - PETUALANGAN PULAU HARTA KARUN
+           ===================================================================== */
+        .map-card {
+            background: linear-gradient(135deg, #16a34a, #0d9488);
+            border: 4px solid #86efac;
+            border-radius: 26px;
+            padding: 16px 18px;
+            color: #ffffff;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
+        }
+
+        .map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .map-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .map-badge {
+            background: rgba(255, 255, 255, 0.22);
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .map-nodes-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            background: rgba(6, 78, 59, 0.35);
+            padding: 10px;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 640px) {
+            .map-nodes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .map-node {
+            border-radius: 14px;
+            padding: 8px 4px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: transform 0.25s;
+        }
+
+        .node-current {
+            background: #facc15;
+            color: #1e293b;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            border: 2px solid #ffffff;
+        }
+
+        .node-done {
+            background: #065f46;
+            color: #a7f3d0;
+            border: 2px solid #34d399;
+        }
+
+        .node-locked {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .node-name {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.15;
+        }
+
+        /* Kartu Soal Interaktif */
+        .quiz-card {
+            border-color: #fbbf24;
+        }
+
+        .quiz-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .pos-pill {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+        }
+
+        .back-learn-link {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 2px solid #7dd3fc;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .quiz-visual-stage {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .quiz-question-text {
+            font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+            color: var(--text-dark);
+            text-align: center;
+            line-height: 1.35;
+            margin-bottom: 22px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            padding: 16px 18px;
+            border-radius: 20px;
+            font-size: 1.25rem;
+            justify-content: flex-start;
+            text-align: left;
+            border: 4px solid transparent;
+        }
+
+        /* Panel Umpan Balik Dino */
+        .feedback-box {
+            margin-top: 22px;
+            padding: 18px 20px;
+            border-radius: 22px;
+            border: 4px solid transparent;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feedback-correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #14532d;
+        }
+
+        .feedback-wrong {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #78350f;
+        }
+
+        .feedback-content {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .feedback-heading {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.35rem;
+        }
+
+        .feedback-desc {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* =====================================================================
+           8. LAYAR 4: SERTIFIKAT KELULUSAN & HADIAH PIALA EMAS
+           ===================================================================== */
+        .certificate-card {
+            border: 8px double #f59e0b;
+            background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+            text-align: center;
+            padding: 32px 24px;
+        }
+
+        .cert-ribbon {
+            display: inline-block;
+            background: #fef3c7;
+            color: #b45309;
+            border: 3px solid #f59e0b;
+            padding: 6px 20px;
+            border-radius: 999px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+
+        .cert-title {
+            font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+            color: #d97706;
+            margin-bottom: 6px;
+        }
+
+        .cert-student-box {
+            display: inline-block;
+            margin: 14px auto;
+            padding: 12px 32px;
+            background: #e0f2fe;
+            border: 4px dashed #0284c7;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.4rem);
+            color: #0369a1;
+        }
+
+        .cert-stats-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            max-width: 440px;
+            margin: 20px auto;
+        }
+
+        .cert-stat-card {
+            background: #ffffff;
+            border: 3px solid #fcd34d;
+            border-radius: 20px;
+            padding: 14px;
+        }
+
+        .cert-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        /* Konfeti */
+        .confetti-piece {
+            position: fixed;
+            top: -20px;
+            z-index: 60;
+            pointer-events: none;
+            animation: confettiDrop linear forwards;
+        }
+
+        /* =====================================================================
+           9. GAYA CETAK SERTIFIKAT (WINDOW.PRINT)
+           ===================================================================== */
+        @media print {
+            body {
+                background: #ffffff !important;
+            }
+            .top-header, .no-print {
+                display: none !important;
+            }
+            .main-container {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+            .certificate-card {
+                box-shadow: none !important;
+                border: 8px double #d97706 !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =====================================================================
+         HEADER NAVIGASI ATAS
+         ===================================================================== -->
+    <header class="top-header">
+        <div class="header-inner">
+            <button type="button" class="brand-btn" onclick="goHome()">
+                <span>🏝️</span>
+                <span>Pulau Bangun Datar</span>
+            </button>
+
+            <div class="header-stats">
+                <div id="headerStudentBadge" class="stat-pill pill-student hidden">
+                    <span>🦖</span>
+                    <span id="headerStudentName">Penjelajah Cilik</span>
+                </div>
+
+                <div id="headerHeartsPill" class="stat-pill pill-hearts hidden" title="Nyawa Petualangan">
+                    <span id="headerHeartsDisplay">❤️❤️❤️</span>
+                </div>
+
+                <div class="stat-pill pill-stars" title="Total Bintang">
+                    <span>⭐</span>
+                    <span id="headerStars">0</span>
+                </div>
+
+                <button type="button" id="soundToggleBtn" class="sound-btn" onclick="toggleSound()" title="Nyalakan / Matikan Suara">
+                    🔊
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         KONTENER UTAMA APLIKASI
+         ===================================================================== -->
+    <main class="main-container">
+
+        <!-- =================================================================
+             LAYAR 1: HALAMAN BERANDA CERIA
+             ================================================================= -->
+        <section id="screenHome" class="card-box home-card animate-pop">
+            <div class="dino-avatar-wrap">
+                <div class="dino-circle animate-float">
+                    <!-- Karakter Pemandu SVG Dino Pintar -->
+                    <svg viewBox="0 0 120 120" width="104" height="104" aria-label="Karakter Dino Pintar">
+                        <circle cx="60" cy="66" r="38" fill="#10b981"/>
+                        <circle cx="60" cy="73" r="26" fill="#a7f3d0"/>
+                        <!-- Duri punggung -->
+                        <polygon points="35,33 45,20 50,36" fill="#f59e0b"/>
+                        <polygon points="55,27 65,14 70,30" fill="#f59e0b"/>
+                        <polygon points="74,34 84,23 86,39" fill="#f59e0b"/>
+                        <!-- Mata ceria -->
+                        <circle cx="47" cy="54" r="7.5" fill="#ffffff"/>
+                        <circle cx="49" cy="54" r="3.8" fill="#1e293b"/>
+                        <circle cx="73" cy="54" r="7.5" fill="#ffffff"/>
+                        <circle cx="71" cy="54" r="3.8" fill="#1e293b"/>
+                        <!-- Pipi merona -->
+                        <ellipse cx="37" cy="64" rx="5.5" ry="3.2" fill="#fb7185" opacity="0.75"/>
+                        <ellipse cx="83" cy="64" rx="5.5" ry="3.2" fill="#fb7185" opacity="0.75"/>
+                        <!-- Senyum lebar -->
+                        <path d="M 45 68 Q 60 83 75 68" stroke="#064e3b" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                        <!-- Topi Penjelajah -->
+                        <ellipse cx="60" cy="30" rx="29" ry="6.5" fill="#fbbf24"/>
+                        <path d="M 41 30 Q 60 11 79 30 Z" fill="#f59e0b"/>
+                    </svg>
+                </div>
+                <span class="dino-tag">Halo! Aku Dino Pintar 🦖</span>
+            </div>
+
+            <h1 class="home-title">Petualangan Pulau Bangun Datar</h1>
+            <p class="home-subtitle">
+                Ayo belajar mengenal bentuk <span style="color:#2563eb;">Persegi</span>, <span style="color:#059669;">Persegi Panjang</span>, <span style="color:#e11d48;">Segitiga</span>, dan <span style="color:#d97706;">Lingkaran</span>, lalu temukan Harta Karun di Pulau Matematika!
+            </p>
+
+            <div class="name-input-box">
+                <label for="studentNameInput" class="name-input-label">
+                    ✏️ Siapa namamu, Penjelajah Hebat?
+                </label>
+                <input type="text" id="studentNameInput" class="name-input-field" maxlength="28" placeholder="Ketik namamu di sini...">
+            </div>
+
+            <div class="home-actions">
+                <button type="button" class="btn-3d btn-learn-start" onclick="startLearnMode()">
+                    <span style="font-size:2.2rem;">📚</span>
+                    <span class="btn-main-title">1. Ruang Belajar</span>
+                    <span class="btn-main-sub">Kenali bentuk, sisi &amp; titik sudut</span>
+                </button>
+
+                <button type="button" class="btn-3d btn-game-start" onclick="startAdventureMode()">
+                    <span style="font-size:2.2rem;">🗺️</span>
+                    <span class="btn-main-title">2. Mulai Petualangan!</span>
+                    <span class="btn-main-sub">Taklukkan 6 pos harta karun</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             LAYAR 2: TAHAP 1 - RUANG BELAJAR INTERAKTIF (PEMBAHASAN)
+             ================================================================= -->
+        <section id="screenLearn" class="hidden animate-pop">
+            <!-- Banner Pemandu Dino -->
+            <div class="coach-banner">
+                <div class="coach-mini-avatar">
+                    <span style="font-size:2.4rem;">🦖</span>
+                </div>
+                <div>
+                    <div class="coach-text-title">Kata Dino Pintar:</div>
+                    <p id="learnCoachText" class="coach-text-body">
+                        Pilih kartu bangun datar di bawah, lalu klik tombol <strong>"Hitung Sisi"</strong> atau <strong>"Hitung Titik Sudut"</strong>!
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4 Tab Bangun Datar Kelas 2 SD -->
+            <div class="shape-tabs-grid">
+                <button type="button" id="tab-persegi" class="btn-3d shape-tab-btn" onclick="selectShape('persegi')">
+                    <span style="font-size:1.7rem;">🟦</span>
+                    <span>Persegi</span>
+                </button>
+                <button type="button" id="tab-persegi_panjang" class="btn-3d shape-tab-btn" onclick="selectShape('persegi_panjang')">
+                    <span style="font-size:1.7rem;">🟩</span>
+                    <span>Persegi Panjang</span>
+                </button>
+                <button type="button" id="tab-segitiga" class="btn-3d shape-tab-btn" onclick="selectShape('segitiga')">
+                    <span style="font-size:1.7rem;">🔺</span>
+                    <span>Segitiga</span>
+                </button>
+                <button type="button" id="tab-lingkaran" class="btn-3d shape-tab-btn" onclick="selectShape('lingkaran')">
+                    <span style="font-size:1.7rem;">🟡</span>
+                    <span>Lingkaran</span>
+                </button>
+            </div>
+
+            <!-- Kartu Utama Pembahasan -->
+            <div class="card-box">
+                <div class="learn-workspace">
+                    <!-- Kolom Kiri: Kanvas SVG + Tombol Hitung Sisi & Titik Sudut -->
+                    <div class="svg-stage-box">
+                        <div id="shapeSvgContainer" class="svg-canvas-area">
+                            <!-- SVG Bangun Datar dirender dinamis -->
+                        </div>
+
+                        <div id="countStatusBadge" class="count-status-pill">
+                            Klik tombol di bawah untuk menghitung!
+                        </div>
+
+                        <div class="count-buttons-row">
+                            <button type="button" class="btn-3d btn-count-side" onclick="animateSides()">
+                                <span>📏</span>
+                                <span>Hitung Sisi</span>
+                            </button>
+                            <button type="button" class="btn-3d btn-count-corner" onclick="animateCorners()">
+                                <span>📍</span>
+                                <span>Hitung Titik Sudut</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan: Penjelasan Ramah Anak & Contoh Benda SVG -->
+                    <div class="shape-info-col">
+                        <div class="shape-header-row">
+                            <span id="shapeBadgeIcon" style="font-size:2.5rem;">🟦</span>
+                            <h2 id="shapeTitle" class="shape-title-text" style="color:#2563eb;">Persegi</h2>
+                        </div>
+
+                        <p id="shapeDesc" class="shape-kid-desc">
+                            Aku adalah Persegi! Keempat sisiku sama panjang dan aku punya 4 titik sudut.
+                        </p>
+
+                        <div class="shape-metrics-grid">
+                            <div class="metric-box metric-side">
+                                <div class="metric-label">Jumlah Sisi</div>
+                                <div id="shapeSidesCount" class="metric-value">4 Sisi</div>
+                            </div>
+                            <div class="metric-box metric-corner">
+                                <div class="metric-label">Titik Sudut</div>
+                                <div id="shapeCornersCount" class="metric-value">4 Sudut</div>
+                            </div>
+                        </div>
+
+                        <div class="examples-box">
+                            <div class="examples-title">👀 Contoh Benda di Sekitar Kita:</div>
+                            <div id="shapeExamplesList" class="examples-grid">
+                                <!-- Ikon SVG benda nyata dirender dinamis -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bar Ajakan Lanjut Petualangan -->
+            <div class="cta-adventure-bar">
+                <div>
+                    <h3 style="font-size:1.3rem; color:#78350f;">Sudah siap berpetualang mencari Harta Karun?</h3>
+                    <p style="font-weight:800; color:#92400e;">Ayo selesaikan 6 pos tantangan bersama Dino Pintar!</p>
+                </div>
+                <button type="button" class="btn-3d" style="background:linear-gradient(135deg,#16a34a,#0d9488); color:#fff; padding:14px 24px; border-radius:18px; font-size:1.2rem; border:2px solid #86efac;" onclick="startAdventureMode()">
+                    <span>🗺️</span>
+                    <span>Mulai Petualangan!</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             LAYAR 3: TAHAP 2 - PETUALANGAN PULAU HARTA KARUN
+             ================================================================= -->
+        <section id="screenGame" class="hidden animate-pop">
+            <!-- Peta Petualangan 6 Pos -->
+            <div class="map-card">
+                <div class="map-header">
+                    <span class="map-title">🧭 Peta Pulau Harta Karun</span>
+                    <span id="levelProgressText" class="map-badge">Pos 1 dari 6</span>
+                </div>
+                <div id="treasureMapTrack" class="map-nodes-grid">
+                    <!-- 6 Pos dirender dinamis -->
+                </div>
+            </div>
+
+            <!-- Kartu Soal Interaktif -->
+            <div class="card-box quiz-card">
+                <div class="quiz-top-row">
+                    <span id="questionBadge" class="pos-pill">🌲 Pos 1: Hutan Segitiga</span>
+                    <button type="button" class="back-learn-link" onclick="startLearnMode()">
+                        📖 Lihat Catatan Belajar
+                    </button>
+                </div>
+
+                <!-- Ilustrasi SVG Soal -->
+                <div id="questionVisualBox" class="quiz-visual-stage">
+                    <!-- Dirender dinamis -->
+                </div>
+
+                <!-- Teks Soal -->
+                <h2 id="questionText" class="quiz-question-text">
+                    Pertanyaan soal...
+                </h2>
+
+                <!-- 4 Pilihan Jawaban Besar -->
+                <div id="optionsContainer" class="options-grid">
+                    <!-- Dirender dinamis -->
+                </div>
+
+                <!-- Panel Umpan Balik Dino Pintar -->
+                <div id="feedbackPanel" class="feedback-box hidden animate-pop">
+                    <div id="feedbackDinoAvatar" style="font-size:3.2rem;">🦖</div>
+                    <div class="feedback-content">
+                        <div id="feedbackTitle" class="feedback-heading">Hebat Sekali!</div>
+                        <p id="feedbackMessage" class="feedback-desc"></p>
+                    </div>
+                    <button type="button" id="nextQuestionBtn" class="btn-3d hidden" style="background:linear-gradient(135deg,#f59e0b,#ea580c); color:#fff; padding:14px 22px; border-radius:18px; font-size:1.15rem; border:2px solid #fde68a;" onclick="nextQuestion()">
+                        Lanjut Pos Berikutnya ➡️
+                    </button>
+                    <button type="button" id="retryGameBtn" class="btn-3d hidden" style="background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; padding:14px 22px; border-radius:18px; font-size:1.15rem; border:2px solid #93c5fd;" onclick="startAdventureMode()">
+                        🔄 Ulangi Petualangan
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             LAYAR 4: TAHAP 3 - SERTIFIKAT & HADIAH KELULUSAN
+             ================================================================= -->
+        <section id="screenVictory" class="hidden animate-pop">
+            <div class="card-box certificate-card">
+                <div class="cert-ribbon">🏆 PETI HARTA KARUN BERHASIL DIBUKA! 🏆</div>
+
+                <!-- Piala Emas SVG -->
+                <div style="margin: 8px auto 12px;" class="animate-float">
+                    <svg viewBox="0 0 140 140" width="124" height="124" aria-label="Piala Emas Juara">
+                        <!-- Pegangan Kiri & Kanan -->
+                        <path d="M 38 38 C 14 38, 14 74, 42 74" fill="none" stroke="#f59e0b" stroke-width="9" stroke-linecap="round"/>
+                        <path d="M 102 38 C 126 38, 126 74, 98 74" fill="none" stroke="#f59e0b" stroke-width="9" stroke-linecap="round"/>
+                        <!-- Badan Piala -->
+                        <path d="M 36 26 L 104 26 L 94 76 C 90 92, 50 92, 46 76 Z" fill="#fbbf24" stroke="#d97706" stroke-width="4"/>
+                        <!-- Kilau Piala -->
+                        <path d="M 48 34 L 54 68" stroke="#fef3c7" stroke-width="5" stroke-linecap="round"/>
+                        <!-- Bintang di Tengah Piala -->
+                        <polygon points="70,40 74,51 86,51 76,58 80,69 70,62 60,69 64,58 54,51 66,51" fill="#ffffff"/>
+                        <!-- Kaki & Dudukan Piala -->
+                        <rect x="62" y="86" width="16" height="20" fill="#d97706"/>
+                        <rect x="42" y="106" width="56" height="14" rx="6" fill="#92400e"/>
+                        <rect x="48" y="110" width="44" height="6" rx="3" fill="#fbbf24"/>
+                    </svg>
+                </div>
+
+                <h1 class="cert-title">Sertifikat Penjelajah Hebat</h1>
+                <p style="font-size:1.1rem; font-weight:800; color:#475569;">Diberikan dengan bangga kepada:</p>
+
+                <div id="certStudentName" class="cert-student-box">Penjelajah Cilik</div>
+
+                <p style="font-size:1.15rem; font-weight:800; color:#334155; max-width:580px; margin:0 auto; line-height:1.5;">
+                    Telah berhasil menaklukkan seluruh tantangan Matematika <span style="color:#16a34a;">Bangun Datar</span> di Pulau Harta Karun dengan penuh semangat!
+                </p>
+
+                <div class="cert-stats-row">
+                    <div class="cert-stat-card">
+                        <div style="font-size:0.9rem; font-weight:900; color:#b45309;">TOTAL BINTANG</div>
+                        <div id="certStarsCount" style="font-family:'Fredoka',sans-serif; font-size:2rem; color:#d97706; margin-top:4px;">⭐ 60</div>
+                    </div>
+                    <div class="cert-stat-card" style="border-color:#86efac;">
+                        <div style="font-size:0.9rem; font-weight:900; color:#15803d;">POS SELESAI</div>
+                        <div style="font-family:'Fredoka',sans-serif; font-size:2rem; color:#16a34a; margin-top:4px;">6 / 6 🚩</div>
+                    </div>
+                </div>
+
+                <p style="font-weight:800; color:#475569; margin-top:8px;">
+                    🦖 Ditandatangani oleh: <strong style="color:#15803d;">Dino Pintar (Guru Matematika Kelas 2 SD)</strong>
+                </p>
+
+                <div class="cert-actions no-print">
+                    <button type="button" class="btn-3d" style="background:linear-gradient(135deg,#0284c7,#2563eb); color:#fff; padding:15px 24px; border-radius:18px; font-size:1.15rem; border:2px solid #93c5fd;" onclick="window.print()">
+                        <span>🖨️</span>
+                        <span>Cetak / Simpan Sertifikat</span>
+                    </button>
+
+                    <button type="button" class="btn-3d" style="background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; padding:15px 26px; border-radius:18px; font-size:1.15rem; border:2px solid #fde68a;" onclick="restartFullGame()">
+                        <span>🔄</span>
+                        <span>Main Lagi</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================================
+         JAVASCRIPT: WEB AUDIO API, DATA MATERI & LOGIKA PETUALANGAN
+         ===================================================================== -->
+    <script>
+        // =====================================================================
+        // 1. SISTEM SUARA WEB AUDIO API MURNI (100% OFFLINE TANPA FILE AUDIO)
+        // =====================================================================
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioCtx() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggleBtn').textContent = soundEnabled ? '🔊' : '🔇';
+            if (soundEnabled) playClickTone();
+        }
+
+        function playTone(freq, type = 'sine', duration = 0.16, delay = 0, volume = 0.2) {
+            if (!soundEnabled) return;
+            const ctx = getAudioCtx();
+            if (!ctx) return;
+
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+
+            gain.gain.setValueAtTime(volume, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(ctx.currentTime + delay);
+            osc.stop(ctx.currentTime + delay + duration);
+        }
+
+        function playClickTone() {
+            playTone(523.25, 'sine', 0.09, 0, 0.15);
+            playTone(659.25, 'sine', 0.11, 0.05, 0.13);
+        }
+
+        function playStepCountTone(stepIndex) {
+            const scale = [440, 493.88, 554.37, 659.25, 739.99];
+            playTone(scale[stepIndex % scale.length], 'triangle', 0.22, 0, 0.22);
+        }
+
+        function playCorrectFanfare() {
+            playTone(523.25, 'triangle', 0.16, 0.00, 0.22); // C5
+            playTone(659.25, 'triangle', 0.16, 0.10, 0.22); // E5
+            playTone(783.99, 'triangle', 0.16, 0.20, 0.22); // G5
+            playTone(1046.50, 'triangle', 0.36, 0.30, 0.25); // C6
+        }
+
+        function playWrongTone() {
+            playTone(349.23, 'sine', 0.22, 0.00, 0.18); // F4
+            playTone(311.13, 'sine', 0.30, 0.16, 0.18); // Eb4
+        }
+
+        function playVictoryMelody() {
+            const notes = [
+                { f: 523.25, d: 0.15, t: 0.00 },
+                { f: 659.25, d: 0.15, t: 0.14 },
+                { f: 783.99, d: 0.15, t: 0.28 },
+                { f: 1046.50, d: 0.35, t: 0.42 },
+                { f: 783.99, d: 0.15, t: 0.78 },
+                { f: 1046.50, d: 0.55, t: 0.94 }
+            ];
+            notes.forEach(n => playTone(n.f, 'triangle', n.d, n.t, 0.24));
+        }
+
+        // =====================================================================
+        // 2. DATA MATERI TAHAP 1: 4 BANGUN DATAR KELAS 2 SD + IKON BENDA SVG
+        // =====================================================================
+        const SHAPES_DATA = {
+            persegi: {
+                title: 'Persegi',
+                icon: '🟦',
+                color: '#2563eb',
+                activeStyle: 'background:#2563eb; color:#ffffff; border-color:#93c5fd;',
+                inactiveStyle: 'background:#ffffff; color:#1d4ed8; border-color:#bfdbfe;',
+                desc: 'Aku adalah Persegi! Keempat sisiku sama panjangnya, dan aku punya 4 titik sudut di setiap pojokku.',
+                sidesCount: 4,
+                cornersCount: 4,
+                sidesText: '4 Sisi Sama Panjang',
+                cornersText: '4 Titik Sudut',
+                coachTip: 'Persegi punya 4 sisi yang sama panjang! Coba tekan tombol "Hitung Sisi" lalu "Hitung Titik Sudut".',
+                examples: [
+                    {
+                        name: 'Papan Catur',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="6" y="6" width="48" height="48" rx="4" fill="#f8fafc" stroke="#1e293b" stroke-width="3"/><rect x="6" y="6" width="24" height="24" fill="#334155"/><rect x="30" y="30" width="24" height="24" fill="#334155"/></svg>`
+                    },
+                    {
+                        name: 'Jendela Kotak',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="6" y="6" width="48" height="48" rx="4" fill="#bae6fd" stroke="#0284c7" stroke-width="4"/><line x1="30" y1="6" x2="30" y2="54" stroke="#0284c7" stroke-width="3"/><line x1="6" y1="30" x2="54" y2="30" stroke="#0284c7" stroke-width="3"/></svg>`
+                    },
+                    {
+                        name: 'Roti Tawar',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="8" y="10" width="44" height="42" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="4"/><circle cx="22" cy="26" r="2" fill="#d97706"/><circle cx="36" cy="34" r="2" fill="#d97706"/></svg>`
+                    }
+                ],
+                renderSVG: () => `
+                    <svg viewBox="0 0 240 240" width="230" height="230">
+                        <rect x="40" y="40" width="160" height="160" fill="#dbeafe" />
+                        <line id="side-1" x1="40" y1="40" x2="200" y2="40" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-2" x1="200" y1="40" x2="200" y2="200" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-3" x1="200" y1="200" x2="40" y2="200" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-4" x1="40" y1="200" x2="40" y2="40" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+                        <!-- Label Nomor Sisi (Tersembunyi sampai dihitung) -->
+                        <g id="side-lbl-1" class="hidden"><circle cx="120" cy="22" r="13" fill="#f59e0b"/><text x="120" y="27" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">1</text></g>
+                        <g id="side-lbl-2" class="hidden"><circle cx="218" cy="120" r="13" fill="#f59e0b"/><text x="218" y="125" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">2</text></g>
+                        <g id="side-lbl-3" class="hidden"><circle cx="120" cy="218" r="13" fill="#f59e0b"/><text x="120" y="223" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">3</text></g>
+                        <g id="side-lbl-4" class="hidden"><circle cx="22" cy="120" r="13" fill="#f59e0b"/><text x="22" y="125" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">4</text></g>
+                        <!-- Titik Sudut -->
+                        <circle id="corner-1" cx="40" cy="40" r="9" fill="#1e3a8a"/>
+                        <circle id="corner-2" cx="200" cy="40" r="9" fill="#1e3a8a"/>
+                        <circle id="corner-3" cx="200" cy="200" r="9" fill="#1e3a8a"/>
+                        <circle id="corner-4" cx="40" cy="200" r="9" fill="#1e3a8a"/>
+                        <text id="corner-txt-1" x="40" y="45" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">1</text>
+                        <text id="corner-txt-2" x="200" y="45" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">2</text>
+                        <text id="corner-txt-3" x="200" y="205" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">3</text>
+                        <text id="corner-txt-4" x="40" y="205" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">4</text>
+                    </svg>
+                `
+            },
+            persegi_panjang: {
+                title: 'Persegi Panjang',
+                icon: '🟩',
+                color: '#059669',
+                activeStyle: 'background:#059669; color:#ffffff; border-color:#6ee7b7;',
+                inactiveStyle: 'background:#ffffff; color:#047857; border-color:#a7f3d0;',
+                desc: 'Aku adalah Persegi Panjang! Aku punya 4 sisi, dua sisi yang berhadapan sama panjang, dan 4 titik sudut.',
+                sidesCount: 4,
+                cornersCount: 4,
+                sidesText: '4 Sisi (2 Panjang, 2 Pendek)',
+                cornersText: '4 Titik Sudut',
+                coachTip: 'Persegi Panjang bentuknya memanjang seperti Papan Tulis dan Buku Tulis di kelas!',
+                examples: [
+                    {
+                        name: 'Papan Tulis',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="4" y="14" width="52" height="32" rx="3" fill="#065f46" stroke="#b45309" stroke-width="4"/><line x1="12" y1="26" x2="36" y2="26" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/></svg>`
+                    },
+                    {
+                        name: 'Buku Tulis',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="12" y="6" width="36" height="48" rx="4" fill="#38bdf8" stroke="#0369a1" stroke-width="3"/><rect x="18" y="14" width="24" height="10" rx="2" fill="#ffffff"/></svg>`
+                    },
+                    {
+                        name: 'Pintu Kelas',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><rect x="14" y="5" width="32" height="50" rx="2" fill="#fde68a" stroke="#b45309" stroke-width="3"/><circle cx="40" cy="31" r="2.5" fill="#92400e"/></svg>`
+                    }
+                ],
+                renderSVG: () => `
+                    <svg viewBox="0 0 240 240" width="230" height="230">
+                        <rect x="24" y="60" width="192" height="120" fill="#d1fae5" />
+                        <line id="side-1" x1="24" y1="60" x2="216" y2="60" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-2" x1="216" y1="60" x2="216" y2="180" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-3" x1="216" y1="180" x2="24" y2="180" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-4" x1="24" y1="180" x2="24" y2="60" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+                        <!-- Label Nomor Sisi -->
+                        <g id="side-lbl-1" class="hidden"><circle cx="120" cy="40" r="13" fill="#f59e0b"/><text x="120" y="45" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">1</text></g>
+                        <g id="side-lbl-2" class="hidden"><circle cx="226" cy="120" r="12" fill="#f59e0b"/><text x="226" y="125" text-anchor="middle" fill="#fff" font-weight="900" font-size="13">2</text></g>
+                        <g id="side-lbl-3" class="hidden"><circle cx="120" cy="200" r="13" fill="#f59e0b"/><text x="120" y="205" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">3</text></g>
+                        <g id="side-lbl-4" class="hidden"><circle cx="14" cy="120" r="12" fill="#f59e0b"/><text x="14" y="125" text-anchor="middle" fill="#fff" font-weight="900" font-size="13">4</text></g>
+                        <!-- Titik Sudut -->
+                        <circle id="corner-1" cx="24" cy="60" r="9" fill="#064e3b"/>
+                        <circle id="corner-2" cx="216" cy="60" r="9" fill="#064e3b"/>
+                        <circle id="corner-3" cx="216" cy="180" r="9" fill="#064e3b"/>
+                        <circle id="corner-4" cx="24" cy="180" r="9" fill="#064e3b"/>
+                        <text id="corner-txt-1" x="24" y="65" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">1</text>
+                        <text id="corner-txt-2" x="216" y="65" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">2</text>
+                        <text id="corner-txt-3" x="216" y="185" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">3</text>
+                        <text id="corner-txt-4" x="24" y="185" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">4</text>
+                    </svg>
+                `
+            },
+            segitiga: {
+                title: 'Segitiga',
+                icon: '🔺',
+                color: '#e11d48',
+                activeStyle: 'background:#e11d48; color:#ffffff; border-color:#fda4af;',
+                inactiveStyle: 'background:#ffffff; color:#be123c; border-color:#fecdd3;',
+                desc: 'Aku adalah Segitiga! Aku punya 3 sisi lurus yang saling bertemu dan membentuk 3 titik sudut.',
+                sidesCount: 3,
+                cornersCount: 3,
+                sidesText: '3 Sisi Lurus',
+                cornersText: '3 Titik Sudut',
+                coachTip: 'Segitiga punya 3 sisi dan 3 titik sudut seperti potongan pizza yang lezat!',
+                examples: [
+                    {
+                        name: 'Potongan Pizza',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><polygon points="30,6 8,50 52,50" fill="#fde047" stroke="#d97706" stroke-width="3"/><path d="M 8 50 Q 30 56 52 50" stroke="#b45309" stroke-width="5" fill="none"/><circle cx="30" cy="26" r="3.5" fill="#e11d48"/><circle cx="22" cy="40" r="3.5" fill="#e11d48"/><circle cx="38" cy="38" r="3.5" fill="#e11d48"/></svg>`
+                    },
+                    {
+                        name: 'Penggaris Segitiga',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><polygon points="10,10 10,50 50,50" fill="#bae6fd" stroke="#0284c7" stroke-width="3"/><polygon points="18,26 18,42 34,42" fill="#ffffff" stroke="#0284c7" stroke-width="2"/></svg>`
+                    },
+                    {
+                        name: 'Tenda Kemah',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><polygon points="30,8 6,50 54,50" fill="#86efac" stroke="#15803d" stroke-width="3"/><polygon points="30,26 20,50 40,50" fill="#14532d"/></svg>`
+                    }
+                ],
+                renderSVG: () => `
+                    <svg viewBox="0 0 240 240" width="230" height="230">
+                        <polygon points="120,32 34,196 206,196" fill="#ffe4e6" />
+                        <line id="side-1" x1="120" y1="32" x2="206" y2="196" stroke="#e11d48" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-2" x1="206" y1="196" x2="34" y2="196" stroke="#e11d48" stroke-width="9" stroke-linecap="round"/>
+                        <line id="side-3" x1="34" y1="196" x2="120" y2="32" stroke="#e11d48" stroke-width="9" stroke-linecap="round"/>
+                        <!-- Label Nomor Sisi -->
+                        <g id="side-lbl-1" class="hidden"><circle cx="182" cy="108" r="13" fill="#f59e0b"/><text x="182" y="113" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">1</text></g>
+                        <g id="side-lbl-2" class="hidden"><circle cx="120" cy="216" r="13" fill="#f59e0b"/><text x="120" y="221" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">2</text></g>
+                        <g id="side-lbl-3" class="hidden"><circle cx="58" cy="108" r="13" fill="#f59e0b"/><text x="58" y="113" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">3</text></g>
+                        <!-- Titik Sudut -->
+                        <circle id="corner-1" cx="120" cy="32" r="9" fill="#881337"/>
+                        <circle id="corner-2" cx="206" cy="196" r="9" fill="#881337"/>
+                        <circle id="corner-3" cx="34" cy="196" r="9" fill="#881337"/>
+                        <text id="corner-txt-1" x="120" y="37" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">1</text>
+                        <text id="corner-txt-2" x="206" y="201" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">2</text>
+                        <text id="corner-txt-3" x="34" y="201" text-anchor="middle" fill="#1e293b" font-weight="900" font-size="13" class="hidden">3</text>
+                    </svg>
+                `
+            },
+            lingkaran: {
+                title: 'Lingkaran',
+                icon: '🟡',
+                color: '#d97706',
+                activeStyle: 'background:#f59e0b; color:#ffffff; border-color:#fde68a;',
+                inactiveStyle: 'background:#ffffff; color:#b45309; border-color:#fcd34d;',
+                desc: 'Aku adalah Lingkaran! Aku hanya punya 1 sisi lengkung yang bulat penuh dan tidak punya titik sudut sama sekali (0 sudut).',
+                sidesCount: 1,
+                cornersCount: 0,
+                sidesText: '1 Sisi Lengkung',
+                cornersText: '0 Titik Sudut',
+                coachTip: 'Lingkaran bulat mulus! Punya 1 sisi lengkung dan 0 titik sudut seperti roda sepeda.',
+                examples: [
+                    {
+                        name: 'Roda Sepeda',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><circle cx="30" cy="30" r="22" fill="none" stroke="#1e293b" stroke-width="5"/><circle cx="30" cy="30" r="5" fill="#ef4444"/><line x1="30" y1="8" x2="30" y2="52" stroke="#64748b" stroke-width="2"/><line x1="8" y1="30" x2="52" y2="30" stroke="#64748b" stroke-width="2"/></svg>`
+                    },
+                    {
+                        name: 'Jam Dinding',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><circle cx="30" cy="30" r="23" fill="#ffffff" stroke="#e11d48" stroke-width="4"/><line x1="30" y1="30" x2="30" y2="16" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="30" x2="40" y2="30" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/></svg>`
+                    },
+                    {
+                        name: 'Uang Koin',
+                        svg: `<svg viewBox="0 0 60 60" width="46" height="46"><circle cx="30" cy="30" r="22" fill="#fde047" stroke="#ca8a04" stroke-width="4"/><circle cx="30" cy="30" r="15" fill="none" stroke="#ca8a04" stroke-width="2" stroke-dasharray="3 2"/></svg>`
+                    }
+                ],
+                renderSVG: () => `
+                    <svg viewBox="0 0 240 240" width="230" height="230">
+                        <circle id="side-1" cx="120" cy="120" r="85" fill="#fef3c7" stroke="#d97706" stroke-width="9" />
+                        <g id="side-lbl-1" class="hidden"><circle cx="120" cy="22" r="14" fill="#f59e0b"/><text x="120" y="27" text-anchor="middle" fill="#fff" font-weight="900" font-size="14">1</text></g>
+                    </svg>
+                `
+            }
+        };
+
+        // =====================================================================
+        // 3. DATA SOAL TAHAP 2: 6 POS PETUALANGAN PULAU HARTA KARUN
+        // =====================================================================
+        const ADVENTURE_LEVELS = [
+            {
+                shortName: 'Hutan Segitiga',
+                icon: '🌲',
+                badge: 'Pos 1: Hutan Segitiga',
+                visualHTML: `
+                    <div style="background:#ffe4e6; border:3px solid #fda4af; border-radius:22px; padding:16px 24px; display:flex; align-items:center; gap:16px;">
+                        <svg viewBox="0 0 110 110" width="90" height="90">
+                            <polygon points="55,12 12,95 98,95" fill="#fb7185" stroke="#be123c" stroke-width="5"/>
+                        </svg>
+                        <div style="text-align:left; font-weight:800; color:#881337; font-size:1.05rem;">
+                            "Aku punya <strong>3 sisi lurus</strong> dan <strong>3 titik sudut</strong>!"
+                        </div>
+                    </div>
+                `,
+                question: 'Apa nama bangun datar berwarna merah muda di atas?',
+                options: [
+                    { label: 'Segitiga', icon: '🔺', correct: true },
+                    { label: 'Persegi', icon: '🟦', correct: false },
+                    { label: 'Lingkaran', icon: '🟡', correct: false },
+                    { label: 'Persegi Panjang', icon: '🟩', correct: false }
+                ],
+                correctMsg: 'Benar sekali! Bangun datar dengan 3 sisi dan 3 sudut adalah Segitiga.',
+                wrongMsg: 'Coba hitung sudutnya yang lancip ada 3 ya! Namanya adalah Segitiga.'
+            },
+            {
+                shortName: 'Sungai Persegi',
+                icon: '🌊',
+                badge: 'Pos 2: Sungai Persegi',
+                visualHTML: `
+                    <div style="background:#dbeafe; border:3px solid #93c5fd; border-radius:22px; padding:16px 24px; display:flex; flex-direction:column; align-items:center;">
+                        <svg viewBox="0 0 120 120" width="96" height="96">
+                            <rect x="20" y="20" width="80" height="80" fill="#60a5fa" stroke="#1d4ed8" stroke-width="5"/>
+                            <circle cx="20" cy="20" r="7" fill="#facc15" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="100" cy="20" r="7" fill="#facc15" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="100" cy="100" r="7" fill="#facc15" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="20" cy="100" r="7" fill="#facc15" stroke="#1e293b" stroke-width="2"/>
+                        </svg>
+                        <span style="font-size:0.85rem; font-weight:800; color:#1e40af; margin-top:4px;">Batu loncatan berbentuk Persegi</span>
+                    </div>
+                `,
+                question: 'Berapa jumlah titik sudut pada bangun Persegi di atas?',
+                options: [
+                    { label: '2 Titik Sudut', icon: '2️⃣', correct: false },
+                    { label: '3 Titik Sudut', icon: '3️⃣', correct: false },
+                    { label: '4 Titik Sudut', icon: '4️⃣', correct: true },
+                    { label: '0 Titik Sudut', icon: '0️⃣', correct: false }
+                ],
+                correctMsg: 'Hebat! Persegi memiliki 4 titik sudut yang ditandai lingkaran kuning di pojoknya.',
+                wrongMsg: 'Ayo hitung titik kuning di pojok batu Persegi itu: ada 1, 2, 3, 4!'
+            },
+            {
+                shortName: 'Bukit Lingkaran',
+                icon: '⛰️',
+                badge: 'Pos 3: Bukit Lingkaran',
+                visualHTML: `
+                    <div style="background:#fef3c7; border:3px solid #fcd34d; border-radius:22px; padding:16px 28px; display:flex; flex-direction:column; align-items:center;">
+                        <svg viewBox="0 0 120 120" width="96" height="96">
+                            <circle cx="60" cy="60" r="44" fill="#fbbf24" stroke="#b45309" stroke-width="5"/>
+                        </svg>
+                    </div>
+                `,
+                question: 'Berapa banyak titik sudut yang dimiliki oleh bangun Lingkaran?',
+                options: [
+                    { label: '0 (Tidak Punya Sudut)', icon: '0️⃣', correct: true },
+                    { label: '1 Titik Sudut', icon: '1️⃣', correct: false },
+                    { label: '3 Titik Sudut', icon: '3️⃣', correct: false },
+                    { label: '4 Titik Sudut', icon: '4️⃣', correct: false }
+                ],
+                correctMsg: 'Pintar! Lingkaran berbentuk bulat mulus sehingga memiliki 0 titik sudut.',
+                wrongMsg: 'Lihat tepi lingkaran kuning itu, mulus melingkar tanpa ujung lancip (0 sudut).'
+            },
+            {
+                shortName: 'Gua Persegi Panjang',
+                icon: '🦇',
+                badge: 'Pos 4: Gua Persegi Panjang',
+                visualHTML: `
+                    <div style="background:#d1fae5; border:3px solid #6ee7b7; border-radius:22px; padding:16px 24px; display:flex; align-items:center; gap:14px;">
+                        <svg viewBox="0 0 140 90" width="115" height="74">
+                            <rect x="10" y="12" width="120" height="66" fill="#34d399" stroke="#065f46" stroke-width="5"/>
+                        </svg>
+                        <div style="text-align:left; font-weight:800; color:#064e3b; font-size:1rem;">
+                            Pintu gua ini memiliki <strong>2 sisi panjang</strong> dan <strong>2 sisi pendek</strong>.
+                        </div>
+                    </div>
+                `,
+                question: 'Bangun datar apakah bentuk pintu gua hijau di atas?',
+                options: [
+                    { label: 'Lingkaran', icon: '🟡', correct: false },
+                    { label: 'Segitiga', icon: '🔺', correct: false },
+                    { label: 'Persegi Panjang', icon: '🟩', correct: true },
+                    { label: 'Persegi', icon: '🟦', correct: false }
+                ],
+                correctMsg: 'Luar biasa! Pintu gua memanjang dengan 4 sisi itu adalah Persegi Panjang.',
+                wrongMsg: 'Perhatikan panjang sisinya tidak sama semua, bentuknya memanjang seperti pintu!'
+            },
+            {
+                shortName: 'Jembatan Benda',
+                icon: '🌉',
+                badge: 'Pos 5: Jembatan Benda Sekitar',
+                visualHTML: `
+                    <div style="background:#f0f9ff; border:3px solid #7dd3fc; border-radius:22px; padding:16px 24px; display:flex; align-items:center; gap:16px;">
+                        <svg viewBox="0 0 70 70" width="68" height="68">
+                            <circle cx="35" cy="35" r="27" fill="none" stroke="#1e293b" stroke-width="6"/>
+                            <circle cx="35" cy="35" r="6" fill="#ef4444"/>
+                            <line x1="35" y1="8" x2="35" y2="62" stroke="#64748b" stroke-width="2.5"/>
+                            <line x1="8" y1="35" x2="62" y2="35" stroke="#64748b" stroke-width="2.5"/>
+                        </svg>
+                        <div style="text-align:left; font-weight:800; color:#0c4a6e; font-size:1.05rem;">
+                            Budi melihat <strong>Roda Sepeda</strong> yang berputar bulat di jembatan!
+                        </div>
+                    </div>
+                `,
+                question: 'Benda roda sepeda milik Budi berbentuk bangun datar apa?',
+                options: [
+                    { label: 'Persegi', icon: '🟦', correct: false },
+                    { label: 'Lingkaran', icon: '🟡', correct: true },
+                    { label: 'Segitiga', icon: '🔺', correct: false },
+                    { label: 'Persegi Panjang', icon: '🟩', correct: false }
+                ],
+                correctMsg: 'Tepat sekali! Roda sepeda, jam dinding, dan koin berbentuk Lingkaran.',
+                wrongMsg: 'Roda sepeda berbentuk bulat melingkar tanpa sudut, yaitu Lingkaran.'
+            },
+            {
+                shortName: 'Kastil Harta Karun',
+                icon: '🏰',
+                badge: 'Pos 6: Kastil Harta Karun',
+                visualHTML: `
+                    <div style="background:#fef3c7; border:3px solid #f59e0b; border-radius:22px; padding:16px 24px; display:flex; align-items:center; gap:16px;">
+                        <span style="font-size:3.2rem;">🍕</span>
+                        <div style="text-align:left; font-weight:800; color:#78350f; font-size:1.02rem;">
+                            <strong>Soal Cerita:</strong> Ibu memotong kue pizza menjadi potongan yang memiliki <strong>3 sisi</strong> dan <strong>3 sudut</strong>.
+                        </div>
+                    </div>
+                `,
+                question: 'Berbentuk bangun datar apakah potongan kue pizza Ibu tersebut?',
+                options: [
+                    { label: 'Persegi Panjang', icon: '🟩', correct: false },
+                    { label: 'Lingkaran', icon: '🟡', correct: false },
+                    { label: 'Segitiga', icon: '🔺', correct: true },
+                    { label: 'Persegi', icon: '🟦', correct: false }
+                ],
+                correctMsg: 'YEEAY! Kunci Kastil terbuka! Potongan pizza berbentuk Segitiga!',
+                wrongMsg: 'Ingat ya, potongan pizza memiliki 3 sisi dan 3 sudut seperti Segitiga.'
+            }
+        ];
+
+        // =====================================================================
+        // 4. STATE PERMAINAN & NAVIGASI LAYAR
+        // =====================================================================
+        let studentName = 'Penjelajah Cilik';
+        let totalStars = 0;
+        let hearts = 3;
+        let currentLearnShape = 'persegi';
+        let animTimer = null;
+
+        let currentLevelIdx = 0;
+        let levelAnswered = false;
+        let firstAttempt = true;
+
+        function syncStudentName() {
+            const val = document.getElementById('studentNameInput').value.trim();
+            studentName = val || 'Penjelajah Cilik';
+            document.getElementById('headerStudentName').textContent = studentName;
+            document.getElementById('headerStudentBadge').classList.remove('hidden');
+        }
+
+        function updateHeaderStats() {
+            document.getElementById('headerStars').textContent = totalStars;
+            const heartsStr = hearts > 0 ? '❤️'.repeat(hearts) + '🤍'.repeat(3 - hearts) : '💔💔💔';
+            document.getElementById('headerHeartsDisplay').textContent = heartsStr;
+        }
+
+        function switchScreen(screenId) {
+            clearAnimTimer();
+            ['screenHome', 'screenLearn', 'screenGame', 'screenVictory'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+
+            // Tampilkan indikator nyawa hanya saat mode petualangan
+            const heartsPill = document.getElementById('headerHeartsPill');
+            if (screenId === 'screenGame') {
+                heartsPill.classList.remove('hidden');
+            } else {
+                heartsPill.classList.add('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            playClickTone();
+            switchScreen('screenHome');
+        }
+
+        // =====================================================================
+        // 5. LOGIKA TAHAP 1: RUANG BELAJAR & ANIMASI HITUNG SISI / SUDUT
+        // =====================================================================
+        function startLearnMode() {
+            playClickTone();
+            syncStudentName();
+            switchScreen('screenLearn');
+            selectShape(currentLearnShape, false);
+        }
+
+        function clearAnimTimer() {
+            if (animTimer) {
+                clearTimeout(animTimer);
+                animTimer = null;
+            }
+        }
+
+        function selectShape(key, withTone = true) {
+            if (withTone) playClickTone();
+            clearAnimTimer();
+            currentLearnShape = key;
+            const data = SHAPES_DATA[key];
+
+            // Gaya Tab Aktif vs Tidak Aktif
+            Object.keys(SHAPES_DATA).forEach(k => {
+                const btn = document.getElementById(`tab-${k}`);
+                btn.setAttribute('style', k === key ? SHAPES_DATA[k].activeStyle : SHAPES_DATA[k].inactiveStyle);
+            });
+
+            document.getElementById('learnCoachText').textContent = data.coachTip;
+            document.getElementById('shapeBadgeIcon').textContent = data.icon;
+            const titleEl = document.getElementById('shapeTitle');
+            titleEl.textContent = data.title;
+            titleEl.style.color = data.color;
+
+            document.getElementById('shapeDesc').textContent = data.desc;
+            document.getElementById('shapeSidesCount').textContent = data.sidesText;
+            document.getElementById('shapeCornersCount').textContent = data.cornersText;
+            document.getElementById('shapeSvgContainer').innerHTML = data.renderSVG();
+            document.getElementById('countStatusBadge').textContent = 'Klik "Hitung Sisi" atau "Hitung Titik Sudut"!';
+
+            // Render contoh benda SVG
+            document.getElementById('shapeExamplesList').innerHTML = data.examples.map(ex => `
+                <div class="example-item-card">
+                    ${ex.svg}
+                    <span class="example-item-name">${ex.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function animateSides() {
+            clearAnimTimer();
+            const data = SHAPES_DATA[currentLearnShape];
+            document.getElementById('shapeSvgContainer').innerHTML = data.renderSVG();
+
+            const statusBadge = document.getElementById('countStatusBadge');
+            let idx = 0;
+
+            function stepSide() {
+                idx++;
+                const sideLine = document.getElementById(`side-${idx}`);
+                const sideLabel = document.getElementById(`side-lbl-${idx}`);
+                if (sideLine) {
+                    sideLine.setAttribute('stroke', '#f59e0b');
+                    sideLine.setAttribute('stroke-width', '13');
+                }
+                if (sideLabel) {
+                    sideLabel.classList.remove('hidden');
+                }
+                playStepCountTone(idx - 1);
+                statusBadge.textContent = `Menghitung Sisi: ${idx} dari ${data.sidesCount} 📏`;
+
+                if (idx < data.sidesCount) {
+                    animTimer = setTimeout(stepSide, 620);
+                } else {
+                    animTimer = setTimeout(() => {
+                        statusBadge.textContent = `${data.title} memiliki ${data.sidesText}! ✨`;
+                        playCorrectFanfare();
+                    }, 520);
+                }
+            }
+
+            stepSide();
+        }
+
+        function animateCorners() {
+            clearAnimTimer();
+            const data = SHAPES_DATA[currentLearnShape];
+            document.getElementById('shapeSvgContainer').innerHTML = data.renderSVG();
+
+            const statusBadge = document.getElementById('countStatusBadge');
+
+            if (data.cornersCount === 0) {
+                playStepCountTone(0);
+                statusBadge.textContent = 'Lingkaran punya 0 Titik Sudut (Bulat Mulus)! 🟡';
+                return;
+            }
+
+            let idx = 0;
+            function stepCorner() {
+                idx++;
+                const dot = document.getElementById(`corner-${idx}`);
+                const txt = document.getElementById(`corner-txt-${idx}`);
+                if (dot) {
+                    dot.setAttribute('r', '16');
+                    dot.setAttribute('fill', '#facc15');
+                    dot.setAttribute('stroke', '#1e293b');
+                    dot.setAttribute('stroke-width', '3');
+                }
+                if (txt) {
+                    txt.classList.remove('hidden');
+                }
+                playStepCountTone(idx - 1);
+                statusBadge.textContent = `Titik Sudut ke-${idx} dari ${data.cornersCount} 📍`;
+
+                if (idx < data.cornersCount) {
+                    animTimer = setTimeout(stepCorner, 620);
+                } else {
+                    animTimer = setTimeout(() => {
+                        statusBadge.textContent = `${data.title} memiliki ${data.cornersText}! 🎉`;
+                        playCorrectFanfare();
+                    }, 520);
+                }
+            }
+
+            stepCorner();
+        }
+
+        // =====================================================================
+        // 6. LOGIKA TAHAP 2: PETUALANGAN PULAU HARTA KARUN (6 POS & 3 NYAWA)
+        // =====================================================================
+        function startAdventureMode() {
+            playClickTone();
+            syncStudentName();
+            currentLevelIdx = 0;
+            hearts = 3;
+            updateHeaderStats();
+            switchScreen('screenGame');
+            renderAdventureLevel();
+        }
+
+        function renderAdventureMap() {
+            const track = document.getElementById('treasureMapTrack');
+            track.innerHTML = ADVENTURE_LEVELS.map((lvl, idx) => {
+                const isDone = idx < currentLevelIdx;
+                const isCurrent = idx === currentLevelIdx;
+                const cls = isCurrent ? 'node-current' : isDone ? 'node-done' : 'node-locked';
+                const icon = isDone ? '✅' : isCurrent ? '🦖' : lvl.icon;
+
+                return `
+                    <div class="map-node ${cls}">
+                        <span style="font-size:1.45rem;">${icon}</span>
+                        <span class="node-name">${idx + 1}. ${lvl.shortName}</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('levelProgressText').textContent = `Pos ${currentLevelIdx + 1} dari ${ADVENTURE_LEVELS.length}`;
+        }
+
+        function renderAdventureLevel() {
+            levelAnswered = false;
+            firstAttempt = true;
+            renderAdventureMap();
+            updateHeaderStats();
+
+            const lvl = ADVENTURE_LEVELS[currentLevelIdx];
+            document.getElementById('questionBadge').textContent = `${lvl.icon} ${lvl.badge}`;
+            document.getElementById('questionVisualBox').innerHTML = lvl.visualHTML;
+            document.getElementById('questionText').textContent = lvl.question;
+
+            const fbPanel = document.getElementById('feedbackPanel');
+            fbPanel.classList.add('hidden');
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+            document.getElementById('retryGameBtn').classList.add('hidden');
+
+            const optThemes = [
+                'background:#e0f2fe; border-color:#7dd3fc; color:#0c4a6e;',
+                'background:#ffe4e6; border-color:#fda4af; color:#881337;',
+                'background:#dcfce7; border-color:#86efac; color:#14532d;',
+                'background:#fef3c7; border-color:#fcd34d; color:#78350f;'
+            ];
+
+            document.getElementById('optionsContainer').innerHTML = lvl.options.map((opt, idx) => `
+                <button type="button" class="btn-3d option-btn opt-choice" style="${optThemes[idx % optThemes.length]}" onclick="handleOptionClick(${idx}, this)">
+                    <span style="font-size:2rem;">${opt.icon}</span>
+                    <span>${opt.label}</span>
+                </button>
+            `).join('');
+        }
+
+        function handleOptionClick(optIdx, btnEl) {
+            if (levelAnswered) return;
+
+            const lvl = ADVENTURE_LEVELS[currentLevelIdx];
+            const chosen = lvl.options[optIdx];
+            const fbPanel = document.getElementById('feedbackPanel');
+            const fbDino = document.getElementById('feedbackDinoAvatar');
+            const fbTitle = document.getElementById('feedbackTitle');
+            const fbMsg = document.getElementById('feedbackMessage');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const retryBtn = document.getElementById('retryGameBtn');
+
+            fbPanel.classList.remove('hidden', 'feedback-correct', 'feedback-wrong');
+            fbDino.classList.remove('dino-happy', 'dino-sad');
+            void fbDino.offsetWidth; // Trigger reflow agar animasi ulang
+
+            if (chosen.correct) {
+                levelAnswered = true;
+                playCorrectFanfare();
+
+                const earned = firstAttempt ? 10 : 5;
+                totalStars += earned;
+                updateHeaderStats();
+
+                document.querySelectorAll('.opt-choice').forEach((btn, i) => {
+                    if (i === optIdx) {
+                        btn.setAttribute('style', 'background:#22c55e; border-color:#86efac; color:#ffffff;');
+                    } else {
+                        btn.style.opacity = '0.45';
+                        btn.style.pointerEvents = 'none';
+                    }
+                });
+
+                fbPanel.classList.add('feedback-correct');
+                fbDino.textContent = '🦖';
+                fbDino.classList.add('dino-happy');
+                fbTitle.textContent = `Hebat, ${studentName}! (+${earned} ⭐)`;
+                fbMsg.textContent = lvl.correctMsg;
+
+                nextBtn.textContent = currentLevelIdx === ADVENTURE_LEVELS.length - 1
+                    ? 'Buka Peti Harta Karun! 🏆'
+                    : 'Lanjut Pos Berikutnya ➡️';
+                nextBtn.classList.remove('hidden');
+            } else {
+                firstAttempt = false;
+                hearts = Math.max(0, hearts - 1);
+                updateHeaderStats();
+                playWrongTone();
+
+                btnEl.setAttribute('style', 'background:#f1f5f9; border-color:#cbd5e1; color:#94a3b8; opacity:0.6; pointer-events:none; box-shadow:none;');
+
+                fbPanel.classList.add('feedback-wrong');
+                fbDino.textContent = '🦖';
+                fbDino.classList.add('dino-sad');
+
+                if (hearts <= 0) {
+                    levelAnswered = true;
+                    document.querySelectorAll('.opt-choice').forEach(b => b.style.pointerEvents = 'none');
+                    fbTitle.textContent = 'Nyawa Habis! Jangan Menyerah Ya 💪';
+                    fbMsg.textContent = `${lvl.wrongMsg} Yuk tekan tombol di samping untuk mencoba petualangan lagi!`;
+                    retryBtn.classList.remove('hidden');
+                } else {
+                    fbTitle.textContent = `Semangat! Sisa Nyawa: ${hearts} ❤️`;
+                    fbMsg.textContent = lvl.wrongMsg;
+                }
+            }
+        }
+
+        function nextQuestion() {
+            playClickTone();
+            if (currentLevelIdx < ADVENTURE_LEVELS.length - 1) {
+                currentLevelIdx++;
+                renderAdventureLevel();
+            } else {
+                showVictoryScreen();
+            }
+        }
+
+        // =====================================================================
+        // 7. TAHAP 3: SERTIFIKAT KELULUSAN & KONFETI PERAYAAN
+        // =====================================================================
+        function showVictoryScreen() {
+            playVictoryMelody();
+            document.getElementById('certStudentName').textContent = studentName;
+            document.getElementById('certStarsCount').textContent = `⭐ ${totalStars}`;
+            switchScreen('screenVictory');
+            spawnConfetti();
+        }
+
+        function restartFullGame() {
+            playClickTone();
+            totalStars = 0;
+            startAdventureMode();
+        }
+
+        function spawnConfetti() {
+            const colors = ['#e11d48', '#2563eb', '#16a34a', '#f59e0b', '#7c3aed'];
+            const icons = ['▲', '■', '●', '★'];
+
+            for (let i = 0; i < 42; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti-piece';
+                el.textContent = icons[i % icons.length];
+                el.style.color = colors[i % colors.length];
+                el.style.fontSize = (16 + Math.random() * 12) + 'px';
+                el.style.fontWeight = '900';
+                el.style.left = (Math.random() * 98) + 'vw';
+                el.style.animationDuration = (2.3 + Math.random() * 1.9) + 's';
+                el.style.animationDelay = (Math.random() * 0.7) + 's';
+                document.body.appendChild(el);
+
+                setTimeout(() => el.remove(), 4600);
+            }
+        }
+    </script>
+</body>
+</html>
